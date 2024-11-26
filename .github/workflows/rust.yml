@@ -20,13 +20,30 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Needed for full git history if dfx requires it
+        fetch-depth: 0
 
     - name: Install DFX
       uses: dfinity/setup-dfx@main
+
+    - name: Start DFX
+      run: dfx start --background
+
+    - name: Setup DFX identity
+      run: |
+        mkdir -p ~/.config/dfx/identity/default
+        # Generate Ed25519 private key
+        openssl genpkey -algorithm Ed25519 -out ~/.config/dfx/identity/default/identity.pem
+        chmod 600 ~/.config/dfx/identity/default/identity.pem
+
+    - name: Create canisters
+      run: dfx canister create --all
 
     - name: Generate wasm artifacts
       run: dfx build
 
     - name: Run tests
       run: cargo test --verbose
+
+    - name: Stop DFX
+      if: always()
+      run: dfx stop

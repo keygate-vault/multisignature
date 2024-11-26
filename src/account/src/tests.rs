@@ -214,7 +214,7 @@ fn should_propose_transaction() {
             to: "test".to_string(),
             token: "test".to_string(),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000,
+            amount: 100_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -224,7 +224,7 @@ fn should_propose_transaction() {
     assert_eq!(proposed_transaction.0.to, "test");
     assert_eq!(proposed_transaction.0.token, "test");
     assert_eq!(proposed_transaction.0.network, SupportedNetwork::ICP);
-    assert_eq!(proposed_transaction.0.amount, 100_000_000);
+    assert_eq!(proposed_transaction.0.amount, 100_000_000.0);
     assert_eq!(
         proposed_transaction.0.transaction_type,
         TransactionType::Transfer
@@ -255,7 +255,7 @@ fn should_get_proposed_transaction() {
             to: "test".to_string(),
             token: "test".to_string(),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000,
+            amount: 100_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -299,7 +299,7 @@ fn should_get_proposed_transactions() {
             to: "test".to_string(),
             token: "test".to_string(),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000,
+            amount: 100_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -335,7 +335,7 @@ fn should_approve_transaction() {
             to: "test".to_string(),
             token: "test".to_string(),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000,
+            amount: 100_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -424,7 +424,7 @@ fn should_reject_transaction() {
             to: "test".to_string(),
             token: "test".to_string(),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000,
+            amount: 100_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -600,7 +600,7 @@ fn should_not_allow_tx_if_threshold_not_met() {
             to: receiver.to_text(),
             token: format!("icp:icrc1:{}", icrc_ledger.to_text()),
             network: SupportedNetwork::ICP,
-            amount: 100_000_000_000,
+            amount: 100_000_000_000.0,
             transaction_type: TransactionType::Transfer,
         },),
     )
@@ -897,7 +897,7 @@ mod intent_tests {
         );
 
         // Create an intent to transfer ICRC1 tokens
-        let transfer_amount = 100_000_000_000;
+        let transfer_amount = 100_000_000_000.0;
         let proposed_tx = ProposeTransactionArgs {
             transaction_type: TransactionType::Transfer,
             amount: transfer_amount,
@@ -1026,7 +1026,7 @@ mod intent_tests {
         );
 
         // Create an intent to transfer ICP
-        let transfer_amount = 100_000_000; // 1 ICP
+        let transfer_amount = 100_000_000.0; // 1 ICP
         let receiver_account = AccountIdentifier::new(&receiver, &DEFAULT_SUBACCOUNT);
         let proposed_tx: ProposeTransactionArgs = ProposeTransactionArgs {
             transaction_type: TransactionType::Transfer,
@@ -1080,7 +1080,7 @@ mod intent_tests {
         .unwrap();
         let receiver_balance = receiver_balance_result.0;
 
-        assert_eq!(receiver_balance.e8s(), transfer_amount);
+        assert_eq!(receiver_balance.e8s(), transfer_amount as u64);
 
         // Check the account canister's balance
         let account_balance_args = AccountBalanceArgs {
@@ -1098,7 +1098,7 @@ mod intent_tests {
 
         assert_eq!(
             account_balance.e8s(),
-            100_000_000_000_000 - transfer_amount - RECOMMENDED_ICP_TRANSACTION_FEE
+            100_000_000_000_000 - transfer_amount as u64 - RECOMMENDED_ICP_TRANSACTION_FEE
         );
     }
 }

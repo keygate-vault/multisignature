@@ -26,6 +26,7 @@ dependencies = [
  "num-bigint",
  "once_cell",
  "pocket-ic",
+ "rand",
  "serde",
  "serde_bytes",
  "serde_cbor",

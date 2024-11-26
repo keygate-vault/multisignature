@@ -38,3 +38,4 @@ b3_utils = { version = "0.13.1", features = ["ledger"] }
 num-bigint = "0.4.6"
 alloy = { git = "https://github.com/kristoferlund/ic-alloy.git", default-features = false, branch = "icp", features = ["icp"]}
 getrandom = { version = "0.2.12", features = ["custom"] }
+rand = "0.8.5"
